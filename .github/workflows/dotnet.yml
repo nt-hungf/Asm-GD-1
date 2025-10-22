@@ -1,0 +1,29 @@
+name: Build and Test Asm-GD-1 (.NET 8)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout source code
+      uses: actions/checkout@v4
+
+    - name: 🧰 Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: 📦 Restore dependencies
+      run: dotnet restore Asm-GD-1.sln
+
+    - name: 🏗️ Build project
+      run: dotnet build Asm-GD-1.sln --configuration Release --no-restore
+
+    - name: 🧪 Run tests (if available)
+      run: dotnet test Asm-GD-1.sln --no-restore --verbosity normal
