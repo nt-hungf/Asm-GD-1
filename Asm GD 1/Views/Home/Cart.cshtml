@@ -1,0 +1,89 @@
+﻿@{
+    var items = (IEnumerable<Asm_GD_1.Models.OrderDetail>)Model;
+    var tongCong = items.Sum(x => x.Price * x.Quantity);
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Lỗi:</strong> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container my-4">
+    <h2 class="mb-4 text-center">🛒 Giỏ hàng của bạn</h2>
+
+    <table class="table table-bordered table-striped align-middle text-center">
+        <thead class="table-warning">
+            <tr>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Tổng</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
+            {
+                var isFood = item.Food != null;
+                var isCombo = item.Combo != null;
+
+                <tr>
+                    <td>
+                        <img src="@(isFood? item.Food.ImageUrl : item.Combo.ImageUrl)"
+                             alt="@(isFood? item.Food.Name : item.Combo.Name)"
+                             class="cart-img rounded shadow-sm"
+                             style="width:60px;height:60px;object-fit:cover" />
+                    </td>
+                    <td>@(isFood? item.Food.Name : item.Combo.Name)</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price.ToString("N0")₫</td>
+                    <td>@((item.Price * item.Quantity).ToString("N0")) VNĐ</td>
+                    <td>
+                        <form asp-action="XoaGioHang" method="post" class="d-inline">
+                            <input type="hidden" name="foodId" value="@item.FoodId" />
+                            <input type="hidden" name="comboId" value="@item.ComboId" />
+                            <button class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-end mt-4">
+        <h4 class="mb-4">
+            Tổng cộng:
+            <span class="text-danger fw-bold">@tongCong.ToString("N0") VNĐ</span>
+        </h4>
+
+        <form asp-action="DatHang" method="post" class="row g-3 justify-content-end">
+            @Html.AntiForgeryToken()
+
+            <div class="col-md-5">
+                <input type="text" name="ShippingAddress" id="ShippingAddress"
+                       placeholder="🏠 Địa chỉ giao hàng" class="form-control" required />
+            </div>
+
+            <div class="col-md-4">
+                <select name="PaymentMethod" class="form-select" required>
+                    <option value="">-- Chọn phương thức thanh toán --</option>
+                    <option value="COD">💵 Thanh toán khi nhận hàng (COD)</option>
+                    <option value="BankTransfer">🏦 Chuyển khoản ngân hàng</option>
+                    <option value="EWallet">📱 Ví điện tử (Momo, ZaloPay,...)</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-warning w-100 fw-bold">
+                    ✅ Đặt hàng
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

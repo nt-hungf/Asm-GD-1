@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Đăng Nhập";
+}
+
+<div class="container mt-5 mt-4 mb-5 p-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Đăng nhập</h4>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger text-center">@ViewBag.Error</div>
+                    }
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" name="email" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" name="password" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                    </form>
+
+                    <div class="mt-3 text-center">
+                        <span>Chưa có tài khoản?</span>
+                        <a asp-controller="Account" asp-action="Register" class="text-decoration-none">Đăng ký ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

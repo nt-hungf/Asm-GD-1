@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Asm_GD_1.Models.Combo>
+
+@{
+    ViewData["Title"] = "Danh sách Combo";
+}
+
+<style>
+    .combo-img {
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        object-fit: cover;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        text-align: center;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-action {                           
+        margin-right: 5px;
+    }
+</style>
+
+<div class="container mt-4 mb-5 p-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">📦 Danh sách Combo</h2>
+        <a class="btn btn-success" href="@Url.Action("CreateCombo", "Admin")">
+            + Thêm Combo
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 20%;">Tên</th>
+                <th style="width: 10%;">Giá</th>
+                <th style="width: 30%;">Mô tả</th>
+                <th style="width: 15%;">Ảnh</th>
+                <th style="width: 15%;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var combo in Model)
+            {
+                <tr>
+                    <td>@combo.Name</td>
+                    <td class="text-danger fw-bold">@combo.Price.ToString("N0") VNĐ</td>
+                    <td>@combo.Description</td>
+                    <td class="text-center">
+                        <img src="@combo.ImageUrl" width="80" height="80" class="combo-img" />
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-warning btn-sm btn-action" href="@Url.Action("EditCombo", "Admin", new { id = combo.ComboId })">
+                            ✏ Sửa
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="@Url.Action("DeleteCombo", "Admin", new { id = combo.ComboId })"
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa combo này không?');">
+                            🗑 Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

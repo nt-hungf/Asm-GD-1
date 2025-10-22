@@ -1,0 +1,20 @@
+﻿@model Asm_GD_1.Models.User
+@{
+    ViewData["Title"] = "Xóa người dùng";
+}
+
+<h2 class="mt-4 text-center mb-4 p-5">Xóa người dùng</h2>
+
+<div class="container mt-4">
+    <div class="alert alert-danger">
+        <p>Bạn có chắc muốn xóa người dùng <strong>@Model.FullName</strong> không?</p>
+    </div>
+
+    <form asp-action="DeleteUser" method="post">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.UserId)
+        @Html.Hidden("id", Model.UserId)
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Users" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

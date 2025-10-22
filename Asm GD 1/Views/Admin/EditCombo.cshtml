@@ -1,0 +1,72 @@
+﻿@model Asm_GD_1.Models.Combo
+
+@{
+    ViewData["Title"] = "Sửa Combo";
+}
+
+<style>
+    .edit-combo-form {
+        max-width: 650px;
+        margin: 40px auto;
+        padding: 25px;
+        background: #f8faff;
+        border-radius: 12px;
+        border: 1px solid #d0e2ff;
+        box-shadow: 0px 3px 8px rgba(0,0,0,0.05);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2b3e63;
+    }
+
+    .preview-img {
+        display: block;
+        max-width: 180px;
+        border-radius: 8px;
+        margin-top: 10px;
+        box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+    }
+</style>
+
+<div class="edit-combo-form">
+    <h3 class="mb-4 text-center text-primary">✏️ Sửa Combo</h3>
+
+    <form asp-action="EditCombo" method="post">
+        <input type="hidden" asp-for="ComboId" />
+
+        <div class="mb-3">
+            <label class="form-label">Tên Combo</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Giá (VNĐ)</label>
+            <input asp-for="Price" type="number" class="form-control" step="1000" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Link Ảnh</label>
+            <input asp-for="ImageUrl" class="form-control" oninput="previewImage(this.value)" />
+            <img id="imgPreview" src="@Model.ImageUrl" class="preview-img" />
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary px-4">💾 Lưu thay đổi</button>
+            <a asp-action="Combo" class="btn btn-outline-secondary px-4">↩ Hủy</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function previewImage(url) {
+        const img = document.getElementById("imgPreview");
+        img.src = url.trim() !== "" ? url : "@Model.ImageUrl";
+    }
+</script>

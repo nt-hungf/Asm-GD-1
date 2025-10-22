@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "Giới thiệu McDonald's";
+}
+
+<style>
+    body {
+
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fff9f6;
+        margin: 0;
+        padding: 0;
+    }
+
+    .banner {
+        background: url('https://mcdelivery.vn/vn//static/1745843925716/assets/84/banners/landing_75344_wos.jpg?') no-repeat center/cover;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 3rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 40px 20px;
+    }
+
+    .section {
+        margin-bottom: 50px;
+    }
+
+        .section h2 {
+            color: #d62828;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .section p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #444;
+        }
+
+    .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+        }
+
+        .product-card h3 {
+            color: #d62828;
+            font-size: 1.2rem;
+            margin: 15px 0 5px;
+        }
+
+        .product-card p {
+            font-size: 0.95rem;
+            padding: 0 10px 15px;
+            color: #555;
+        }
+
+    .store-list {
+        list-style: none;
+        padding: 0;
+    }
+
+        .store-list li {
+            padding: 8px 0;
+            font-size: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+</style>
+
+<div class="banner ">
+    McDonald's Việt Nam
+</div>
+
+<div class="container">
+    <div class="section">
+        <h2>Về chúng tôi</h2>
+        <p>
+            McDonald’s là chuỗi cửa hàng thức ăn nhanh nổi tiếng toàn cầu với hơn 39,000 cửa hàng tại hơn 100 quốc gia.
+            Tại Việt Nam, McDonald’s mang đến trải nghiệm ẩm thực tiện lợi, ngon miệng và phù hợp với mọi lứa tuổi,
+            với các món ăn được chế biến từ nguyên liệu chất lượng và phục vụ nhanh chóng.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Sản phẩm nổi bật</h2>
+        <div class="products">
+            <div class="product-card">
+                <img src="https://mcdelivery.vn/vn//static/1753437141350/assets/84/products/1291.png?" alt="Big Mac">
+                <h3>Big Mac</h3>
+                <p>Bánh burger bò kinh điển với sốt Big Mac đặc trưng.</p>
+            </div>
+            <div class="product-card">
+                <img src="https://mcdelivery.vn/vn//static/1753437141350/assets/84/products/1288.png?" alt="McChicken">
+                <h3>McChicken</h3>
+                <p>Burger gà giòn tan với rau xà lách tươi mát.</p>
+            </div>
+            <div class="product-card">
+                <img src="https://mcdelivery.vn/vn//static/1753437141350/assets/84/products/1066.png?" alt="Khoai tây chiên">
+                <h3>Khoai tây chiên</h3>
+                <p>Vàng giòn, nóng hổi – món ăn kèm hoàn hảo.</p>
+            </div>
+            <div class="product-card">
+                <img src="https://mcdelivery.vn/vn//static/1753437141350/assets/84/products/8002.png?" alt="Kem Vanilla">
+                <h3>Kem Vanilla</h3>
+                <p>Mềm mịn, thơm ngon và mát lạnh.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Sứ mệnh của chúng tôi</h2>
+        <p>
+            Chúng tôi cam kết phục vụ những món ăn ngon, chất lượng với giá hợp lý và dịch vụ thân thiện.
+            McDonald’s không ngừng đổi mới để mang đến trải nghiệm tuyệt vời nhất cho khách hàng.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>📍 Hệ thống cửa hàng</h2>
+        <ul class="store-list">
+            <li>TP. Hồ Chí Minh – Quận 1, Quận 7, Quận Bình Thạnh...</li>
+            <li>Hà Nội – Quận Hoàn Kiếm, Quận Cầu Giấy...</li>
+            <li>Đà Nẵng – Quận Hải Châu...</li>
+        </ul>
+    </div>
+</div>

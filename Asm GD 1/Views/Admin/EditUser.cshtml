@@ -1,0 +1,48 @@
+﻿@model Asm_GD_1.Models.User
+@{
+    ViewData["Title"] = "Chỉnh sửa người dùng";
+}
+
+<h2 class="text-center mt-4 p-5">Chỉnh sửa người dùng</h2>
+
+<div class="container">
+    <form method="post">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.UserId)
+
+        <div class="mb-3">
+            <label>Họ và tên</label>
+            @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+            <span class="text-danger">@Html.ValidationMessageFor(m => m.FullName)</span>
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            <span class="text-danger">@Html.ValidationMessageFor(m => m.Email)</span>
+        </div>
+
+        <div class="mb-3">
+            <label>Số điện thoại</label>
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+            <span class="text-danger">@Html.ValidationMessageFor(m => m.Phone)</span>
+        </div>
+
+        <div class="mb-3">
+            <label>Địa chỉ</label>
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+            <span class="text-danger">@Html.ValidationMessageFor(m => m.Address)</span>
+        </div>
+
+        <div class="mb-3">
+            <label>Vai trò</label>
+            @Html.DropDownListFor(m => m.Role,
+                new SelectList(new[] { "User", "Admin" }, Model.Role),
+                "-- Chọn vai trò --",
+                new { @class = "form-select" })
+            <span class="text-danger">@Html.ValidationMessageFor(m => m.Role)</span>
+        </div>
+
+        <button type="submit" class="btn btn-dark w-100">Lưu thay đổi</button>
+    </form>
+</div>

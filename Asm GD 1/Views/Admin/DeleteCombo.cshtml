@@ -1,0 +1,8 @@
+﻿@model Asm_GD_1.Models.Combo
+
+<h3 class="mb-4 mt-4 p-5">Bạn có chắc muốn xóa Combo này?</h3>
+<p><strong>@Model.Name</strong> - @Model.Price VNĐ</p>
+<form method="post">
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a href="@Url.Action("Combo", "Admin")" class="btn btn-secondary">Hủy</a>
+</form>

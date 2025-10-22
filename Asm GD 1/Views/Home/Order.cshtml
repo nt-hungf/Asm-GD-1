@@ -1,0 +1,59 @@
+﻿@model List<Asm_GD_1.Models.Order>
+@{
+    ViewData["Title"] = "Danh sách đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow-lg p-4 mt-4">
+    <h2 class="mb-4 text-primary fw-bold">
+        📋 Danh sách đơn hàng
+    </h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success shadow-sm">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger shadow-sm">@TempData["Error"]</div>
+    }
+
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+        <thead class="bg-dark text-white text-center">
+            <tr>
+                <th style="width:80px;">Mã đơn</th>
+                <th style="width:170px;">Ngày đặt</th>
+                <th>Địa chỉ giao</th>
+                <th style="width:150px;">Tổng tiền</th>
+                <th style="width:150px;">Trạng thái</th>
+                <th style="width:120px;">Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td class="text-center fw-bold">#@order.OrderId</td>
+                    <td class="text-center">@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@order.ShippingAddress</td>
+                    <td class="text-end text-success fw-bold">
+                        @order.TotalAmount.ToString("N0") ₫
+                    </td>
+                    <td class="text-center">
+                        <span class="badge
+                                @(order.Status == "Hoàn thành" ? "bg-success" :
+                                                            order.Status == "Đang xử lí" ? "bg-warning text-dark" : "bg-secondary")">
+                        @order.Status
+                    </span>
+                </td>
+                <td class="text-center">
+                    <a href="@Url.Action("OrderDetail", "Home", new { id = order.OrderId })"
+                       class="btn btn-info btn-sm shadow-sm">
+                        🔍 Xem
+                    </a>
+                </td>
+            </tr>
+                        }
+        </tbody>
+    </table>
+</div>

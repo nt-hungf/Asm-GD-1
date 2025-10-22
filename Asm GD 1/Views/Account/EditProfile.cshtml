@@ -1,0 +1,103 @@
+﻿@model Asm_GD_1.Models.User
+
+@{
+    ViewData["Title"] = "EditProfile";
+}
+
+<style>
+    .form-card {
+        width: 500px;
+        margin: 50px auto 0 auto; /* thêm khoảng cách 50px từ trên xuống */
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        padding: 20px;
+        background: #f9f9f9;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #444444;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #cccccc;
+        box-shadow: none;
+    }
+
+        .form-control:focus {
+            border-color: #6a89cc;
+            box-shadow: 0 0 0 0.2rem rgba(106, 137, 204, 0.25);
+        }
+
+    .btn-submit {
+        background-color: #444444;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-submit:hover {
+            background-color: #666666;
+            color: aliceblue;
+        }
+
+    table {
+        width: 100%;
+    }
+
+    td {
+        padding: 8px;
+        vertical-align: middle;
+    }
+</style>
+
+<div class="form-card">
+    <div class=" mb-5 p-5">
+    <h4 class="mb-4">Cập nhật thông tin</h4>
+    <form asp-action="EditProfile" asp-route-id="@Model.UserId" method="post">
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="Password" />
+        <input type="hidden" asp-for="Address" />
+        <input type="hidden" asp-for="Role" />
+
+        <table>
+            <tr>
+                <td class="form-label">Họ tên</td>
+                <td><input asp-for="FullName" class="form-control" /></td>
+            </tr>
+
+            <tr>
+                <td class="form-label">Số điện thoại</td>
+                <td><input asp-for="Phone" class="form-control" /></td>
+            </tr>
+
+            <tr>
+                <td class="form-label">Email</td>
+                <td><input asp-for="Email" class="form-control bg-light" readonly /></td>
+            </tr>
+
+            <tr>
+                <td class="form-label">Phân quyền</td>
+                <td>
+                    <select asp-for="Role" class="form-control bg-light" disabled>
+                        <option value="User">User</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align:center; padding-top: 20px;">
+                    <button type="submit" class="btn btn-submit">
+                        Lưu thay đổi
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>

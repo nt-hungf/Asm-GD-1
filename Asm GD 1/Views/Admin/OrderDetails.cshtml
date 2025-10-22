@@ -1,0 +1,74 @@
+﻿@model Asm_GD_1.Models.Order
+
+<div class="card shadow-lg mt-4">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">📦 Chi tiết đơn hàng #@Model.OrderId</h4>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <p><strong>👤 Khách hàng:</strong> @Model.User.FullName</p>
+                <p><strong>📍 Địa chỉ giao:</strong> @Model.ShippingAddress</p>
+                <p><strong>📞 Số điện thoại:</strong> @Model.User.Phone</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>🗓 Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy")</p>
+                <p><strong>📌 Trạng thái hiện tại:</strong>
+                    <span class="badge 
+                        @(Model.Status == "Đã giao" ? "bg-success" :
+                          Model.Status == "Đang giao" ? "bg-warning text-dark" : "bg-secondary")">
+                        @Model.Status
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Tên món</th>
+                    <th style="width:100px;">Số lượng</th>
+                    <th style="width:150px;">Giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderDetails)
+                {
+                    var isFood = item.Food != null;
+                    var name = isFood ? item.Food.Name : item.Combo?.Name;
+                    var price = isFood ? item.Food.Price : item.Combo?.Price ?? 0;
+
+                    <tr>
+                        <td>@name</td>
+                        <td class="text-center">@item.Quantity</td>
+                        <td class="text-end">@price.ToString("N0") đ</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+        <h4 class="text-end mt-3">
+            💰 <span class="text-danger fw-bold">@Model.TotalAmount.ToString("N0") đ</span>
+        </h4>
+
+        <hr />
+
+        <form method="post" asp-action="UpdateOrderStatus" class="row g-3">
+            <input type="hidden" name="id" value="@Model.OrderId" />
+            <div class="col-md-6">
+                <label class="form-label fw-bold">Cập nhật trạng thái</label>
+                <select name="Status" class="form-select">
+                    <option value="Chưa giao" selected="@(Model.Status == "Chưa giao")">Chưa giao</option>
+                    <option value="Đang giao" selected="@(Model.Status == "Đang giao")">Đang giao</option>
+                    <option value="Đã giao" selected="@(Model.Status == "Đã giao")">Đã giao</option>
+                </select>
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+                <button type="submit" class="btn btn-success w-100">
+                    ✅ Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

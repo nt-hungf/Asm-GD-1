@@ -1,0 +1,73 @@
+﻿@model Asm_GD_1.Models.Combo
+
+@{
+    ViewData["Title"] = "Thêm Combo";
+}
+
+<style>
+    .combo-form {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 25px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .form-label {
+        font-weight: 500;
+    }
+
+    .preview-img {
+        display: none;
+        max-width: 150px;
+        border-radius: 8px;
+        margin-top: 10px;
+        box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    }
+</style>
+
+<div class="combo-form mt-4 mb-5 p-5">
+    <h3 class="mb-4 text-center">📦 Thêm Combo</h3>
+
+    <form asp-action="CreateCombo" method="post">
+        <div class="mb-3">
+            <label class="form-label">Tên Combo</label>
+            <input asp-for="Name" class="form-control" placeholder="Nhập tên combo" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Giá (VNĐ)</label>
+            <input asp-for="Price" type="number" class="form-control" step="1000" placeholder="Nhập giá combo" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Nhập mô tả combo"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Link Ảnh</label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="Nhập URL ảnh" oninput="previewImage(this.value)" />
+            <img id="imgPreview" class="preview-img" />
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success px-4">✅ Thêm</button>
+            <a asp-action="Combo" class="btn btn-secondary px-4">❌ Hủy</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function previewImage(url) {
+        const img = document.getElementById("imgPreview");
+        if (url.trim() !== "") {
+            img.src = url;
+            img.style.display = "block";
+        } else {
+            img.style.display = "none";
+        }
+    }
+</script>

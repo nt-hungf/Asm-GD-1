@@ -1,0 +1,103 @@
+﻿@model List<Asm_GD_1.Models.Order>
+
+@{
+    ViewData["Title"] = "Danh sách đơn hàng";
+}
+
+<!-- Link Bootstrap Icons nếu chưa có -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+    table th {
+        background-color: #0d6efd;
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table td {
+        vertical-align: middle;
+    }
+
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .status-shipping {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .status-completed {
+        background-color: #28a745;
+        color: white;
+    }
+</style>
+
+<h2 class="mb-4 mt-4 text-primary fw-bold">
+    📋 Danh sách đơn hàng
+</h2>
+
+<table class="table table-bordered table-hover shadow-sm">
+    <thead>
+        <tr>
+            <th><i class="bi bi-hash"></i> Mã</th>
+            <th><i class="bi bi-calendar-event"></i> Ngày đặt</th>
+            <th><i class="bi bi-geo-alt"></i> Địa chỉ giao</th>
+            <th><i class="bi bi-cash-stack"></i> Tổng tiền</th>
+            <th><i class="bi bi-info-circle"></i> Trạng thái</th>
+            <th><i class="bi bi-person"></i> Khách hàng</th>
+            <th><i class="bi bi-gear"></i> Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            var statusClass = order.Status switch
+            {
+                "Chưa giao" => "status-badge status-pending",
+                "Đang giao" => "status-badge status-shipping",
+                "Đã giao" => "status-badge status-completed",
+                _ => "status-badge"
+            };
+
+            var statusIcon = order.Status switch
+            {
+                "Chưa giao" => "bi bi-hourglass-split",
+                "Đang giao" => "bi bi-truck",
+                "Đã giao" => "bi bi-check-circle",
+                _ => "bi bi-question-circle"
+            };
+
+            <tr>
+                <td class="text-center fw-bold">@order.OrderId</td>
+                <td class="text-center">@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@order.ShippingAddress</td>
+                <td class="text-end text-danger fw-bold">@order.TotalAmount.ToString("N0") đ</td>
+                <td class="text-center">
+                    <span class="@statusClass">
+                        <i class="@statusIcon"></i> @order.Status
+                    </span>
+                </td>
+                <td>@order.User?.FullName</td>
+                <td class="text-center">
+                    <a asp-action="OrderDetails" asp-route-id="@order.OrderId"
+                       class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-eye"></i> Xem
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

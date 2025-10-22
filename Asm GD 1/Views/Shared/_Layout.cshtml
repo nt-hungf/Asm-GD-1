@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Asm_GD_1.styles.css" asp-append-version="true" />
+
+    <style>
+        header .navbar {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+            margin: 15px 20px;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+        }
+
+            header .navbar:hover {
+                box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+            }
+
+        .navbar-nav .nav-link {
+            position: relative;
+            color: #333;
+            font-weight: 600;
+        }
+
+            .navbar-nav .nav-link::after {
+                content: "";
+                position: absolute;
+                bottom: -3px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #f1c40f;
+                transition: width 0.3s ease;
+            }
+
+            .navbar-nav .nav-link:hover::after {
+                width: 100%;
+            }
+
+        .btn-login, .btn-register {
+            border-radius: 50px;
+            padding: 6px 18px;
+        }
+
+        .btn-login {
+            border: 2px solid #f1c40f;
+            color: #333;
+            background: transparent;
+        }
+
+            .btn-login:hover {
+                background: #f1c40f;
+                color: #fff;
+                box-shadow: 0 0 10px rgba(241,196,15,0.6);
+            }
+
+        .btn-register {
+            background: #f1c40f;
+            color: #000;
+        }
+
+            .btn-register:hover {
+                background: #fff;
+                color: #f1c40f;
+                box-shadow: 0 0 10px rgba(241,196,15,0.6);
+            }
+
+        footer {
+            background: linear-gradient(135deg, #353535, #1a1a1a);
+            color: #ccc;
+            padding: 40px 0 20px;
+        }
+
+            footer a {
+                color: #aaa;
+            }
+
+                footer a:hover {
+                    color: #f1c40f;
+                    text-shadow: 0 0 8px rgba(241,196,15,0.8);
+                }
+
+            footer .social-icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.05);
+                color: #f1c40f;
+                font-size: 20px;
+                margin-right: 10px;
+                transition: all 0.3s ease;
+            }
+
+                footer .social-icon:hover {
+                    background: #f1c40f;
+                    color: #000;
+                    transform: rotate(10deg);
+                }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(180deg, #fffce8, #ffffff);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="container">
+        <nav class="navbar navbar-expand-lg navbar-light  shadow-sm fixed-top">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                    <img src="https://mcdelivery.vn/vn//static/1745843925716/assets/84/img/mcdelivery_logo_en.jpg" alt="Bee Logo" style="height:50px;" />
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-controller="Home" asp-action="GioiThieu">Giới thiệu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-controller="Home" asp-action="LienHe">Liên hệ</a>
+                        </li>
+                    </ul>
+
+                    <!--  nút đăng nhập / đăng ký / tài khoản -->
+                    <div class="d-flex align-items-center">
+                        @if (Context.Session.GetString("UserEmail") != null)
+                        {
+                            <div class="dropdown me-2">
+                                <button class="btn btn-outline-dark dropdown-toggle fw-semibold boder-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle me-1"></i> @Context.Session.GetString("FullName")
+                                </button>
+
+                                @{
+                                    var role = Context.Session.GetString("UserRole");
+                                }
+
+                                <ul class="dropdown-menu dropdown-menu-end shadow">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                                            <i class="bi bi-person"></i> Tài khoản
+                                        </a>
+                                    </li>
+                                    @if (role != "Admin")
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Home" asp-action="Cart">
+                                                <i class="bi bi-box-seam"></i> Giỏ hàng
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (role != "Admin")
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Home" asp-action="Order">
+                                                <i class="bi bi-bookmark"></i> Hóa đơn
+                                            </a>
+                                        </li>
+                                    }
+
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" asp-controller="Account" asp-action="Logout">
+                                            <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-login" style="margin-right:20px">
+                                Đăng nhập
+                            </a>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-register">
+                                Đăng ký
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Nội dung chính -->
+    <div class="container"  >
+        <main role="main" class="py-5" style="min-height: 55vh ;     margin-top: 100px;">
+            @RenderBody()
+        </main>
+    </div>
+
+    
+    <footer class="bg-dark text-light pt-4 pb-3 mb-0">
+        <div class="container mt-5 mb-0">
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="https://mcdelivery.vn/vn//static/1745843925716/assets/84/img/mcdelivery_logo_en.jpg" alt="Bee Logo" style="height:40px;" />
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><a asp-controller="Home" asp-action="Index" class="text-light text-decoration-none">Promotions</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">HOT and NEWS</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Daebak Fried Chicken</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Combo</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Secret Menu</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Beef Burger</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase fw-bold">Support</h6>
+                    <ul class="list-unstyled">
+                        <li><a asp-controller="Home" asp-action="Index" class="text-light text-decoration-none">Terms & Conditions</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Privacy Policy</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Web Ordering Policy</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">FAQ</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Contact us</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy" class="text-light text-decoration-none">Mobile web</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase fw-bold">Liên hệ</h6>
+                    <p class="mb-1"><i class="bi bi-envelope"></i> McDonal@gmail.com</p>
+                    <p class="mb-1"><i class="bi bi-phone"></i> 0912 345 678</p>
+                    <div class="mt-2">
+                        <a href="#" class="text-light me-2"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-light me-2"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-twitter fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-light" />
+            <div class="text-center text-muted">
+                &copy; 2025 BeeFood. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

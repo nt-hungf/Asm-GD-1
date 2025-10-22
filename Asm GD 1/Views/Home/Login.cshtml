@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            width: 350px;
+        }
+
+            .login-container h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+            }
+
+            .login-container input[type="text"],
+            .login-container input[type="password"] {
+                width: 100%;
+                padding: 12px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                box-sizing: border-box;
+            }
+
+            .login-container button {
+                width: 100%;
+                padding: 12px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+                .login-container button:hover {
+                    background-color: #45a049;
+                }
+
+            .login-container .forgot {
+                text-align: right;
+                margin-top: 10px;
+                font-size: 14px;
+            }
+
+                .login-container .forgot a {
+                    color: #007BFF;
+                    text-decoration: none;
+                }
+
+                    .login-container .forgot a:hover {
+                        text-decoration: underline;
+                    }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Đăng Nhập</h2>
+        <form>
+            <input type="text" placeholder="Tên đăng nhập" required>
+            <input type="password" placeholder="Mật khẩu" required>
+            <button type="submit">Đăng nhập</button>
+            <div class="forgot">
+                <a href="#">Quên mật khẩu?</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

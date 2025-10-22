@@ -1,0 +1,94 @@
+﻿@model Asm_GD_1.Models.Food
+@{
+    ViewData["Title"] = "Thêm món ăn";
+}
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .form-container h2 {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: #ff5722;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .btn-submit {
+        background-color: #ff9800;
+        border: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: #e68900;
+    }
+
+    .btn-cancel {
+        margin-left: 10px;
+    }
+</style>
+
+<div class="p-5">
+<div class="form-container ">
+    <h2>Thêm món ăn mới</h2>
+    <form asp-action="CreateFood" method="post">
+            @Html.AntiForgeryToken()
+        <div class="form-group mb-3">
+            <label for="Name">Tên món</label>
+            <input asp-for="Name" class="form-control" placeholder="Nhập tên món" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Price">Giá</label>
+            <input asp-for="Price" class="form-control" type="number" step="0.01" placeholder="Nhập giá" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="ImageUrl">Ảnh (URL)</label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="Nhập link ảnh" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Description">Mô tả</label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Nhập mô tả"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3 form-check">
+            <input asp-for="IsAvailable" class="form-check-input" />
+            <label class="form-check-label" for="IsAvailable">Còn bán?</label>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="CategoryId">Danh mục</label>
+            <select asp-for="CategoryId" class="form-control"
+                    asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name"))">
+                <option value="">-- Chọn danh mục --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-submit">Lưu</button>
+            <a asp-action="MonAn" class="btn btn-secondary btn-cancel">Hủy</a>
+        </div>
+    </form>
+    </div>
+</div>

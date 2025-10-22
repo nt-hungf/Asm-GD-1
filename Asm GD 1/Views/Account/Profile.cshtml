@@ -1,0 +1,195 @@
+﻿@model Asm_GD_1.Models.User
+
+@{
+    ViewData["Title"] = "Tài khoản";
+}
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    .sidebar {
+        width: 240px;
+        background-color: #333;
+        color: #fff;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 30px 20px;
+    }
+
+        .sidebar h2 {
+            font-size: 24px;
+            color: #f4c430;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            margin: 15px 0;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+            .sidebar a:hover {
+                color: #f4c430;
+            }
+
+    .main-content {
+        margin-left: 260px;
+        padding: 40px;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            color: #333;
+        }
+
+        .dashboard-header p {
+            font-size: 18px;
+            color: #666;
+        }
+
+    .grid-box {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .card {
+        background-color: #fff;
+        border-left: 6px solid #f4c430;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 20px;
+            height: 70px;
+        }
+
+        .card a {
+            background-color: #f4c430;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+    .profile-box {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+        .profile-box h3 {
+            color: #f4c430;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+    .profile-item {
+        margin-bottom: 12px;
+        font-size: 16px;
+        color: #444;
+    }
+
+        .profile-item strong {
+            width: 140px;
+            display: inline-block;
+            color: #222;
+        }
+
+    .btn-warning {
+        background-color: #f4c430;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        float: right;
+    }
+
+        .btn-warning:hover {
+            background-color: #e6b800;
+        }
+</style>
+
+<div class="mx-4 content mt-4 mb-5 p-5">
+    <div class="profile-box " style="height: 283px;">
+        <h3>Thông tin tài khoản</h3>
+        <div class="profile-item"><strong>Họ tên:</strong> @Model.FullName</div>
+        <div class="profile-item"><strong>Email:</strong> @Model.Email</div>
+        <div class="profile-item"><strong>Số điện thoại:</strong> @Model.Phone</div>
+        <div class="profile-item"><strong>Phân quyền:</strong> @Model.Role</div>
+        <a asp-action="EditProfile" class="btn-warning">Chỉnh sửa</a>
+    </div>
+
+    @{
+        var role = Context.Session.GetString("UserRole");
+    }
+
+    @if (role == "Admin")
+    {
+        <div class="grid-box">
+            <div class="card">
+                <h2>Quản lý tài khoản</h2>
+                <p>Thêm, xóa, cập nhật thông tin người dùng.</p>
+                <a asp-controller="Admin" asp-action="Users">Xem chi tiết</a>
+            </div>
+
+            <div class="card">
+                <h2>Quản lý món ăn nhanh</h2>
+                <p>Danh sách, thêm mới, cập nhật và xóa các món ăn nhanh có trong hệ thống.</p>
+                <a asp-controller="Admin" asp-action="MonAn">Xem chi tiết</a>
+            </div>
+
+            <div class="card">
+                <h2>Quản lý combo</h2>
+                <p>Thêm combo mới, chỉnh sửa hoặc xóa các combo món ăn.</p>
+                <a asp-controller="Admin" asp-action="Combo">Xem chi tiết</a>
+            </div>
+
+            <div class="card">
+                <h2>Quản lý đơn hàng</h2>
+                <p>Theo dõi trạng thái đơn hàng: đã giao, đang giao, chưa giao.</p>
+                <a asp-controller="Admin" asp-action="Order">Xem chi tiết</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div >
+          
+        </div>
+    }
+</div>

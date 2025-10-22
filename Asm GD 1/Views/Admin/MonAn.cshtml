@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Asm_GD_1.Models.Food>
+@{
+    ViewData["Title"] = "Quản lý món ăn";
+}
+
+<h2 class="mt-4 mb-5 p-5">Quản lý món ăn</h2>
+<a asp-controller="Admin" asp-action="CreateFood" class="btn btn-success mb-3">+ Thêm món ăn</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên món</th>
+            <th>Giá</th>
+            <th>Ảnh</th>
+            <th>Danh mục</th>
+            <th>Tình trạng</th>
+            <th>Thao Tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var food in Model)
+        {
+            <tr>
+                <td>@food.Name</td>
+                <td>@food.Price.ToString("N0") ₫</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(food.ImageUrl))
+                    {
+                        <img src="@food.ImageUrl" width="80" />
+                    }
+                </td>
+                <td>@food.Category?.Name</td>
+                <td>@(food.IsAvailable ? "Còn bán" : "Hết hàng")</td>
+                <td>
+                    <a asp-action="EditFood" asp-route-id="@food.FoodId" class="btn btn-sm btn-primary">Sửa</a>
+                    <a asp-action="DeleteFood" asp-route-id="@food.FoodId" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

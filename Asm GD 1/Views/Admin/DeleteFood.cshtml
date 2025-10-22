@@ -1,0 +1,13 @@
+﻿@model Asm_GD_1.Models.Food
+@{
+    ViewData["Title"] = "Xóa món ăn";
+}
+
+<h2 class="mt-4 p-5">Xóa món ăn</h2>
+<p>Bạn có chắc chắn muốn xóa món <strong>@Model.Name</strong> không?</p>
+
+<form asp-action="DeleteFood" method="post">
+    <input type="hidden" asp-for="FoodId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="MonAn" class="btn btn-secondary">Hủy</a>
+</form>

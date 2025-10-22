@@ -1,0 +1,72 @@
+﻿@model Asm_GD_1.Models.Order
+
+<div class="card shadow-lg p-4 mt-4">
+    <h2 class="mb-4 text-primary fw-bold">
+        📦 Chi tiết đơn hàng #@Model.OrderId
+    </h2>
+
+    <div class="mb-3">
+        <p><strong>📅 Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>🏠 Địa chỉ:</strong> @Model.ShippingAddress</p>
+        <p>
+            <strong>📌 Trạng thái:</strong>
+            <span class="badge
+                @(Model.Status == "Hoàn thành" ? "bg-success" :
+                                    Model.Status == "Đang xử lí" ? "bg-warning text-dark" : "bg-secondary")">
+                @Model.Status
+            </span>
+        </p>
+        <p>
+            <strong>💰 Tổng tiền:</strong>
+            <span class="text-danger fw-bold">@Model.TotalAmount.ToString("N0") ₫</span>
+        </p>
+        <p>
+            <strong>💳 Phương thức thanh toán:</strong>
+            <span class="fw-semibold text-primary">@Model.PaymentMethod</span>
+        </p>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+        <thead class="bg-warning text-dark text-center">
+            <tr>
+                <th style="width:80px;">Ảnh</th>
+                <th>Tên món / Combo</th>
+                <th style="width:120px;">Số lượng</th>
+                <th style="width:120px;">Giá</th>
+                <th style="width:150px;">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderDetails)
+            {
+                var isFood = item.Food != null;
+                var imageUrl = isFood ? item.Food.ImageUrl : item.Combo?.ImageUrl;
+                var name = isFood ? item.Food.Name : item.Combo?.Name;
+
+                <tr>
+                    <td class="text-center">
+                        @if (!string.IsNullOrEmpty(imageUrl))
+                        {
+                            <img src="@imageUrl"
+                                 alt="@name"
+                                 class="rounded shadow-sm"
+                                 style="width:60px;height:60px;object-fit:cover;" />
+                        }
+                    </td>
+                    <td class="fw-semibold">@name</td>
+                    <td class="text-center">@item.Quantity</td>
+                    <td class="text-end text-success fw-bold">@item.Price.ToString("N0") ₫</td>
+                    <td class="text-end text-danger fw-bold">
+                        @((item.Price * item.Quantity).ToString("N0")) ₫
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-end mt-4">
+        <a href="@Url.Action("Order", "Home")" class="btn btn-secondary shadow">
+            ⬅ Quay lại
+        </a>
+    </div>
+</div>
