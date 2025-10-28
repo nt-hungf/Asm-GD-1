@@ -20,10 +20,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: 📦 Restore dependencies
-      run: dotnet restore Asm-GD-1.sln
+      run: dotnet restore "Asm GD 1.sln"
 
     - name: 🏗️ Build project
-      run: dotnet build Asm-GD-1.sln --configuration Release --no-restore
+      run: dotnet build "Asm GD 1.sln" --configuration Release --no-restore
 
     - name: 🧪 Run unit tests
       run: dotnet test FastFoodShop.Tests/FastFoodShop.Tests.csproj --no-build --verbosity normal
