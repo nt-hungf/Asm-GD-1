@@ -2,9 +2,9 @@ name: Build and Test Asm-GD-1 (.NET 8)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -25,5 +25,5 @@ jobs:
     - name: 🏗️ Build project
       run: dotnet build Asm-GD-1.sln --configuration Release --no-restore
 
-    - name: 🧪 Run tests (if available)
-      run: dotnet test Asm-GD-1.sln --no-restore --verbosity normal
+    - name: 🧪 Run unit tests
+      run: dotnet test FastFoodShop.Tests/FastFoodShop.Tests.csproj --no-build --verbosity normal
